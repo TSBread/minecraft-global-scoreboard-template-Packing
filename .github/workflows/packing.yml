@@ -1,0 +1,26 @@
+name: Main
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v4
+        with :
+          python-version: "3.11"
+      
+      - name: Install requirements
+        run: |
+          pip install -r requirements.txt
+          
+      - name: 执行文件
+        env:
+          Data: ${{ secrets.Data }}
+        run: |
+          python3 main.py
