@@ -1,7 +1,9 @@
 name: Main
 
 on:
-  deployment
+  push:
+    paths:
+      - '**'
 
 jobs:
   setup:
