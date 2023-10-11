@@ -3,7 +3,7 @@ name: Main
 on:
   push:
     paths:
-      - '**'
+      - '**.mgst'
 
 jobs:
   setup:
