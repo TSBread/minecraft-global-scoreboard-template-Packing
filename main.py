@@ -17,9 +17,8 @@ def delete_commit_value(repo_owner, repo_name):
     result = json.loads(urlopen(Request(url, headers=headers)).read().decode())
     for i in result:
         if i["name"] == "value.mgst":
-            data = {"message": "合并成功", "sha": i['sha']}
             warnings.filterwarnings('ignore')
-            requests.delete(url + '/value', data=json.dumps(data), headers=headers, verify=False)
+            requests.delete(url + '/value.mgst', data=json.dumps({"sha": i['sha']}), headers=headers, verify=False)
             c_url = 'https://api.github.com/repos/' + repo_owner + '/' + repo_name + '/git/blobs/' + i['sha']
             content = json.loads(urlopen(Request(c_url, headers=headers)).read().decode())
             return bytes.decode(base64.b64decode(content['content']))
