@@ -8,7 +8,7 @@ import requests
 
 
 def delete_commit_value():
-    url = 'https://api.github.com/repos/TSBread/CGAC/contents'
+    url = 'https://api.github.com/repos/TSBread/minecraft-global-scoreboard-template-Packing/contents'
     headers = {'User-Agent': 'Mozilla/5.0',
                'Authorization': 'token ' + os.environ.get('TOKEN'),
                'Accept': 'application/vnd.github.v3+json'}
