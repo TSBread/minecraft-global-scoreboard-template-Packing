@@ -1,7 +1,6 @@
 name: Main
 
 on:
-  workflow_dispatch:
   push:
     branches: [main]
 
@@ -21,6 +20,6 @@ jobs:
           
       - name: 执行文件
         env:
-          Data: ${{ secrets.Data }}
+          TOKEN: ${{ secrets.TOKEN }}
         run: |
           python3 main.py
