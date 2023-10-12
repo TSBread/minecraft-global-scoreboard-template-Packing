@@ -49,7 +49,7 @@ if __name__ == '__main__':
     print("Debug Print")
     	
     print(os.listdir())
-    print(os.listdir(os.getcwd() + "\save"))
+    print(os.listdir(os.getcwd() + "/save"))
     owner = 'TSBread'
     name = 'minecraft-global-scoreboard-template-Packing'  # minecraft-global-scoreboard-template-Packing
     repo_content = get_repo_content(owner, name)
