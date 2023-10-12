@@ -49,7 +49,8 @@ def delete_player_update_info(repo_owner, repo_name, repo):
     for i in repo:
         warnings.filterwarnings('ignore')
         data = {"message": "合并成功", "sha": i['sha']}
-        requests.delete(url + '/value.mgst', data=json.dumps(data), headers=headers, verify=False)
+        test = requests.delete(url + '/value.mgst', data=json.dumps(data), headers=headers, verify=False)
+        print(test.text)
 
 
 def check_mgst(repo):
@@ -66,6 +67,7 @@ if __name__ == '__main__':
     name = 'minecraft-global-scoreboard-template-Packing'  # minecraft-global-scoreboard-template-Packing
     repo_content = get_repo_content(owner, name)
     if check_mgst(repo_content):
+        print("step 0")
         data = get_player_update_info(owner, name, repo_content)
         merge_file_data(owner, name, data)
         delete_player_update_info(owner, name, repo_content)
