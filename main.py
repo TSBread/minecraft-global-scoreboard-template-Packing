@@ -54,6 +54,15 @@ def delete_player_update_info(repo_owner, repo_name, repo):
         requests.delete(url + '/value.mgst', data=json.dumps(data), headers=headers, verify=False)
 
 
+def zip_map(path):
+    zip = zipfile.ZipFile('release.zip', 'w', zipfile.ZIP_DEFLATED)
+    for root, dirs, files in os.walk(path):
+        relative_root = '' if root == path else root.replace(path, '') + os.sep
+        for filename in files:
+            zip.write(os.path.join(root, filename), relative_root + filename)
+    zip.close()
+
+
 def check_mgst(repo):
     for i in repo:
         if i["name"] == "value.mgst":
@@ -67,4 +76,5 @@ if __name__ == '__main__':
     if check_mgst(repo_content):
         data = get_player_update_info(owner, name, repo_content)
         merge_file_data(owner, name, data)
+        zip_map('saves')
         delete_player_update_info(owner, name, repo_content)
