@@ -47,12 +47,9 @@ def delete_player_update_info(repo_owner, repo_name, repo):
 
 if __name__ == '__main__':
     print("Debug Print")
-    	
-    print(os.listdir())
-    print(os.listdir(os.getcwd() + "/save"))
     owner = 'TSBread'
     name = 'minecraft-global-scoreboard-template-Packing'  # minecraft-global-scoreboard-template-Packing
     repo_content = get_repo_content(owner, name)
     print(get_player_update_info(owner, name, repo_content))
     delete_player_update_info(owner, name, repo_content)
-    # merge_file_data('save/modify.mcfunction', '{"type": 1, "value": 1}')
+    merge_file_data('saves/modify.mcfunction', '{"type": 1, "value": 1}')
