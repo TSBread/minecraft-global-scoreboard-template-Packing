@@ -12,17 +12,23 @@ headers = {'User-Agent': 'Mozilla/5.0',
            'Accept': 'application/vnd.github.v3+json'}
 
 
-def merge_file_data(file, data):
-    with open(f'{file}', 'r+', encoding='utf-8') as f:
-        content = list(f.readline())
-        if content[-2] == "[":
-            content.insert(-1, data)
-        else:
-            content.insert(-1, "," + data)
-        f.seek(0)
-        f.truncate(0)
-        f.write("".join(content))
-        print(f.readline())
+def merge_file_data(repo_owner, repo_name, data):
+    url = 'https://api.github.com/repos/' + repo_owner + '/' + repo_name + '/contents/saves?ref=main'
+    for i in json.loads(urlopen(Request(url, headers=headers)).read().decode()):
+        if i['name'] == 'modify.mcfunction':
+            url = 'https://api.github.com/repos/' + repo_owner + '/' + repo_name + '/git/blobs/' + i['sha']
+            content = json.loads(urlopen(Request(url, headers=headers)).read().decode())
+            get_data = list(bytes.decode(base64.b64decode(content['content'])))
+            if get_data[-2] == "[":
+                get_data.insert(-1, data)
+            else:
+                get_data.insert(-1, "," + data)
+            data = "".join(get_data)
+            data = {"message": "上传玩家提交数据", "sha": i['sha'],
+                    "content": bytes.decode(base64.b64encode(data.encode('utf-8')))}
+            url = 'https://api.github.com/repos/' + repo_owner + '/' + repo_name + '/contents/saves'
+            warnings.filterwarnings('ignore')
+            requests.put(url + '/modify.mcfunction', data=json.dumps(data), headers=headers, verify=False)
 
 
 def get_repo_content(repo_owner, repo_name):
@@ -51,6 +57,6 @@ if __name__ == '__main__':
     owner = 'TSBread'
     name = 'minecraft-global-scoreboard-template-Packing'  # minecraft-global-scoreboard-template-Packing
     repo_content = get_repo_content(owner, name)
-    print(get_player_update_info(owner, name, repo_content))
+    data = get_player_update_info(owner, name, repo_content)
+    merge_file_data(owner, name, data)
     delete_player_update_info(owner, name, repo_content)
-    merge_file_data('saves/modify.mcfunction', '{"type": 1, "value": 1}')
