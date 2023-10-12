@@ -25,7 +25,6 @@ jobs:
         run: |
           python3 main.py
       
-      - name: 打包地图
       - uses: montudor/action-zip@v1
         with:
           args: zip -qq -r release.zip saves
