@@ -24,7 +24,7 @@ jobs:
           TOKEN: ${{ secrets.TOKEN }}
         run: |
           python3 main.py
-          
+
       - name: 打包地图
         run: |
-          zip -r release.zip ./save
+          zip -r release.zip ./saves
