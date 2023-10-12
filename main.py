@@ -33,6 +33,13 @@ def merge_file_data(repo_owner, repo_name, data):
             requests.put(url + path, data=json.dumps(data), headers=headers, verify=False)
 
 
+def update_file_to_repo(repo_owner, repo_name, file):
+    url = 'https://api.github.com/repos/' + repo_owner + '/' + repo_name + '/content'
+    data = {"message": "地图档案打包", "content": bytes.decode(base64.b64encode(file.encode('utf-8')))}
+    warnings.filterwarnings('ignore')
+    requests.put(url + path, data=json.dumps(data), headers=headers, verify=False)
+
+
 def get_repo_content(repo_owner, repo_name):
     url = 'https://api.github.com/repos/' + repo_owner + '/' + repo_name + '/contents'
     return json.loads(urlopen(Request(url, headers=headers)).read().decode())
@@ -77,4 +84,5 @@ if __name__ == '__main__':
         data = get_player_update_info(owner, name, repo_content)
         merge_file_data(owner, name, data)
         zip_map('saves')
+        update_file_to_repo(owner, name, 'release.zip')
         delete_player_update_info(owner, name, repo_content)
