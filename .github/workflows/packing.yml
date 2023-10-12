@@ -27,4 +27,4 @@ jobs:
       
       - uses: montudor/action-zip@v1
         with:
-          args: zip -qq -r release.zip /home/runner/work/minecraft-global-scoreboard-template-Packing/saves
+          args: zip -qq -r release.zip ./saves
