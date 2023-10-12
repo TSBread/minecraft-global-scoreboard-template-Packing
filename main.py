@@ -48,7 +48,7 @@ def delete_player_update_info(repo_owner, repo_name, repo):
 if __name__ == '__main__':
     print("Debug Print")
     	
-    print(os.getcwd())
+    print(os.listdir())
     owner = 'TSBread'
     name = 'minecraft-global-scoreboard-template-Packing'  # minecraft-global-scoreboard-template-Packing
     repo_content = get_repo_content(owner, name)
