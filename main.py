@@ -22,6 +22,7 @@ def merge_file_data(file, data):
         f.seek(0)
         f.truncate(0)
         f.write("".join(content))
+        print(f.readline())
 
 
 def get_repo_content(repo_owner, repo_name):
