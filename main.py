@@ -60,7 +60,7 @@ def check_mgst(repo):
 
 
 if __name__ == '__main__':
-    print(os.listdir())
+    print(os.getcwd())
     owner = 'TSBread'
     name = 'minecraft-global-scoreboard-template-Packing'
     repo_content = get_repo_content(owner, name)
