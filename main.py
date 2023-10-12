@@ -2,6 +2,7 @@ import os
 import json
 import base64
 import warnings
+import zipfile
 from urllib.request import urlopen
 from urllib.request import Request
 
@@ -27,7 +28,7 @@ def merge_file_data(repo_owner, repo_name, data):
                 get_data.insert(-1, "," + data)
             data = "".join(get_data)
             Mydata = {"message": "上传玩家提交数据", "sha": i['sha'],
-                    "content": bytes.decode(base64.b64encode(data.encode('utf-8')))}
+                      "content": bytes.decode(base64.b64encode(data.encode('utf-8')))}
             url = 'https://api.github.com/repos/' + repo_owner + '/' + repo_name + '/contents/saves'
             warnings.filterwarnings('ignore')
             requests.put(url + path, data=json.dumps(Mydata), headers=headers, verify=False)
