@@ -38,7 +38,7 @@ def update_file_to_repo(repo_owner, repo_name, file):
     url = 'https://api.github.com/repos/' + repo_owner + '/' + repo_name + '/content'
     data = {"message": "地图档案打包", "content": bytes.decode(base64.b64encode(file.encode('utf-8')))}
     warnings.filterwarnings('ignore')
-    requests.put(url + path, data=json.dumps(data), headers=headers, verify=False)
+    requests.put(url + file, data=json.dumps(data), headers=headers, verify=False)
 
 
 def get_repo_content(repo_owner, repo_name):
