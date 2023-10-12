@@ -53,6 +53,11 @@ def delete_player_update_info(repo_owner, repo_name, repo):
         requests.delete(url + '/value.mgst', data=json.dumps(data), headers=headers, verify=False)
 
 
+def total_update_player_number(repo_owner, repo_name):
+    url = 'https://api.github.com/repos/' + repo_owner + '/' + repo_name + '/events'
+    return len(json.loads(urlopen(Request(url, headers=headers)).read().decode()))
+
+
 def check_mgst(repo):
     for i in repo:
         if i["name"] == "value.mgst":
@@ -65,6 +70,8 @@ if __name__ == '__main__':
     name = 'minecraft-global-scoreboard-template-Packing'
     repo_content = get_repo_content(owner, name)
     if check_mgst(repo_content):
+        update_number = total_update_player_number(owner, name)
+        print(update_number)
         data = get_player_update_info(owner, name, repo_content)
         merge_file_data(owner, name, data)
         delete_player_update_info(owner, name, repo_content)
