@@ -12,6 +12,18 @@ headers = {'User-Agent': 'Mozilla/5.0',
            'Accept': 'application/vnd.github.v3+json'}
 
 
+def merge_file_data(file, data):
+    with open(f'{file}', 'r+', encoding='utf-8') as f:
+        content = list(f.readline())
+        if content[-2] == "[":
+            content.insert(-1, data)
+        else:
+            content.insert(-1, "," + data)
+        f.seek(0)
+        f.truncate(0)
+        f.write("".join(content))
+
+
 def get_repo_content(repo_owner, repo_name):
     url = 'https://api.github.com/repos/' + repo_owner + '/' + repo_name + '/contents'
     return json.loads(urlopen(Request(url, headers=headers)).read().decode())
@@ -40,3 +52,4 @@ if __name__ == '__main__':
     repo_content = get_repo_content(owner, name)
     print(get_player_update_info(owner, name, repo_content))
     delete_player_update_info(owner, name, repo_content)
+    merge_file_data('save/modify.mcfunction', '{"type": 1, "value": 1}')
