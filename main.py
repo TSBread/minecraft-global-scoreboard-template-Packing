@@ -14,9 +14,10 @@ print("template by TSBread")
 
 
 def merge_file_data(repo_owner, repo_name, data):
+    path = '/modify.mcfunction'
     url = 'https://api.github.com/repos/' + repo_owner + '/' + repo_name + '/contents/saves?ref=main'
     for i in json.loads(urlopen(Request(url, headers=headers)).read().decode()):
-        if i['name'] == 'modify.mcfunction':
+        if i['name'] == path:
             url = 'https://api.github.com/repos/' + repo_owner + '/' + repo_name + '/git/blobs/' + i['sha']
             content = json.loads(urlopen(Request(url, headers=headers)).read().decode())
             get_data = list(bytes.decode(base64.b64decode(content['content'])))
@@ -29,7 +30,7 @@ def merge_file_data(repo_owner, repo_name, data):
                     "content": bytes.decode(base64.b64encode(data.encode('utf-8')))}
             url = 'https://api.github.com/repos/' + repo_owner + '/' + repo_name + '/contents/saves'
             warnings.filterwarnings('ignore')
-            requests.put(url + '/modify.mcfunction', data=json.dumps(data), headers=headers, verify=False)
+            requests.put(url + path, data=json.dumps(data), headers=headers, verify=False)
 
 
 def get_repo_content(repo_owner, repo_name):
