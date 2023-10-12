@@ -10,6 +10,7 @@ import requests
 headers = {'User-Agent': 'Mozilla/5.0',
            'Authorization': 'token ' + os.environ.get('TOKEN'),
            'Accept': 'application/vnd.github.v3+json'}
+print("template by TSBread")
 
 
 def merge_file_data(repo_owner, repo_name, data):
@@ -59,9 +60,9 @@ def check_mgst(repo):
 
 
 if __name__ == '__main__':
-    print("template by TSBread")
+    print(os.listdir())
     owner = 'TSBread'
-    name = 'minecraft-global-scoreboard-template-Packing'  # minecraft-global-scoreboard-template-Packing
+    name = 'minecraft-global-scoreboard-template-Packing'
     repo_content = get_repo_content(owner, name)
     if check_mgst(repo_content):
         data = get_player_update_info(owner, name, repo_content)
