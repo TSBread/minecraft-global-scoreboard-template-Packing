@@ -26,11 +26,11 @@ def merge_file_data(repo_owner, repo_name, data):
             else:
                 get_data.insert(-1, "," + data)
             data = "".join(get_data)
-            data = {"message": "上传玩家提交数据", "sha": i['sha'],
+            Mydata = {"message": "上传玩家提交数据", "sha": i['sha'],
                     "content": bytes.decode(base64.b64encode(data.encode('utf-8')))}
             url = 'https://api.github.com/repos/' + repo_owner + '/' + repo_name + '/contents/saves'
             warnings.filterwarnings('ignore')
-            requests.put(url + path, data=json.dumps(data), headers=headers, verify=False)
+            requests.put(url + path, data=json.dumps(Mydata), headers=headers, verify=False)
 
 
 def update_file_to_repo(repo_owner, repo_name, file):
