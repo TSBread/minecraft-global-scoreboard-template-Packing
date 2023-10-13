@@ -3,6 +3,7 @@ import json
 import base64
 import warnings
 import zipfile
+import io
 from urllib.request import urlopen
 from urllib.request import Request
 
