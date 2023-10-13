@@ -92,7 +92,7 @@ if __name__ == '__main__':
     repo_content = get_repo_content(owner, name)
     data = get_player_update_info(owner, name, repo_content)
     merge_file_data(owner, name, data)
-    with open(packing_name, 'b') as f:
+    with open(packing_name, 'wb') as f:
         f.write(zip_files_in_buffer('save').getbuffer())
     delete_file_from_repo(owner, name, repo_content, packing_name)
     update_file_to_repo(owner, name, packing_name)
