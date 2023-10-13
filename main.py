@@ -55,14 +55,6 @@ def get_player_update_info(repo_owner, repo_name, repo):
             return bytes.decode(base64.b64decode(content['content']))
 
 
-def delete_player_update_info(repo_owner, repo_name, repo):
-    url = 'https://api.github.com/repos/' + repo_owner + '/' + repo_name + '/contents'
-    for i in repo:
-        warnings.filterwarnings('ignore')
-        data = {"message": "合并成功", "sha": i['sha']}
-        requests.delete(url + '/value.mgst', data=json.dumps(data), headers=headers, verify=False)
-
-
 def zip_map(path):
     zip = zipfile.ZipFile('release.zip', 'w', zipfile.ZIP_DEFLATED)
     for root, dirs, files in os.walk(path):
@@ -72,12 +64,6 @@ def zip_map(path):
     zip.close()
 
 
-def check_mgst(repo):
-    for i in repo:
-        if i["name"] == "value.mgst":
-            return 1
-
-
 if __name__ == '__main__':
     print("test")
     owner = 'TSBread'
@@ -85,9 +71,6 @@ if __name__ == '__main__':
     repo_content = get_repo_content(owner, name)
     data = get_player_update_info(owner, name, repo_content)
     merge_file_data(owner, name, data)
-    # if check_mgst(repo_content):
-    #     data = get_player_update_info(owner, name, repo_content)
-    #     merge_file_data(owner, name, data)
         # zip_map('saves')
         # update_file_to_repo(owner, name, 'release.zip')
-        # delete_player_update_info(owner, name, repo_content)
+
