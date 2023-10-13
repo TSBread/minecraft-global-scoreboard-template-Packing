@@ -89,10 +89,12 @@ if __name__ == '__main__':
     print(os.listdir('saves'))
     owner = 'TSBread'
     name = 'minecraft-global-scoreboard-template-Packing'
+    packing_name = 'test.zip'
     repo_content = get_repo_content(owner, name)
     data = get_player_update_info(owner, name, repo_content)
     merge_file_data(owner, name, data)
-    with open('test.zip', 'wb') as f:
-        f.write(zip_files_in_buffer('saves').getbuffer())
+    with open(packing_name, 'wb') as f:
+        f.write(zip_files_in_buffer('save').getbuffer())
     delete_file_from_repo(owner, name, repo_content, packing_name)
-    update_file_to_repo(owner, name, 'test.zip')
+    update_file_to_repo(owner, name, packing_name)
+
