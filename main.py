@@ -31,7 +31,8 @@ def merge_file_data(repo_owner, repo_name, data):
                       "content": bytes.decode(base64.b64encode(data.encode('utf-8')))}
             url = 'https://api.github.com/repos/' + repo_owner + '/' + repo_name + '/contents/saves'
             warnings.filterwarnings('ignore')
-            requests.put(url + path, data=json.dumps(Mydata), headers=headers, verify=False)
+            feedback = requests.put(url + path, data=json.dumps(Mydata), headers=headers, verify=False)
+            print(feedback.text)
 
 
 def update_file_to_repo(repo_owner, repo_name, file):
