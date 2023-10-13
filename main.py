@@ -86,4 +86,4 @@ if __name__ == '__main__':
         merge_file_data(owner, name, data)
         zip_map('saves')
         update_file_to_repo(owner, name, 'release.zip')
-        delete_player_update_info(owner, name, repo_content)
+        # delete_player_update_info(owner, name, repo_content)
