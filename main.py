@@ -64,6 +64,15 @@ def get_player_update_info(repo_owner, repo_name, repo):
             return bytes.decode(base64.b64decode(content['content']))
 
 
+def delete_file_from_repo(repo_owner, repo_name, repo, file_name):
+    url = 'https://api.github.com/repos/' + repo_owner + '/' + repo_name + '/contents/'
+    for i in repo:
+        if i['name'] == packing_name:
+            warnings.filterwarnings('ignore')
+            data = {"message": "删除旧版本", "sha": i['sha']}
+            requests.delete(url + packing_name, data=json.dumps(data), headers=headers, verify=False)
+
+
 def zip_files_in_buffer(path):
     buffer = io.BytesIO()
     zfile = zipfile.ZipFile(buffer, 'w', zipfile.ZIP_DEFLATED)
@@ -85,4 +94,5 @@ if __name__ == '__main__':
     merge_file_data(owner, name, data)
     with open('test.zip', 'wb') as f:
         f.write(zip_files_in_buffer('saves').getbuffer())
+    delete_file_from_repo(owner, name, repo_content, packing_name)
     update_file_to_repo(owner, name, 'test.zip')
