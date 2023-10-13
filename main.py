@@ -35,11 +35,19 @@ def merge_file_data(repo_owner, repo_name, data):
             requests.put(url + "/"+path, data=json.dumps(mydata), headers=headers, verify=False)
 
 
+def open_file(file):
+    with open(file, 'rb') as f:
+        return f.read()
+
+
 def update_file_to_repo(repo_owner, repo_name, file):
-    url = 'https://api.github.com/repos/' + repo_owner + '/' + repo_name + '/content'
-    data = {"message": "地图档案打包", "content": bytes.decode(base64.b64encode(file.encode('utf-8')))}
+    url = 'https://api.github.com/repos/' + repo_owner + '/' + repo_name + '/content/'
+    data = {"message": "地图档案打包", "content": base64.b64encode(open_file(file)).decode('utf-8')}
     warnings.filterwarnings('ignore')
-    requests.put(url + file, data=json.dumps(data), headers=headers, verify=False)
+    print(data['content'])
+    print(url + file)
+    test = requests.put(url + file, data=json.dumps(data), headers=headers, verify=False)
+    print(test.text)
 
 
 def get_repo_content(repo_owner, repo_name):
@@ -55,13 +63,16 @@ def get_player_update_info(repo_owner, repo_name, repo):
             return bytes.decode(base64.b64decode(content['content']))
 
 
-def zip_map(path):
-    zip = zipfile.ZipFile('release.zip', 'w', zipfile.ZIP_DEFLATED)
+def zip_files_in_buffer(path):
+    buffer = io.BytesIO()
+    zfile = zipfile.ZipFile(buffer, 'w', zipfile.ZIP_DEFLATED)
     for root, dirs, files in os.walk(path):
         relative_root = '' if root == path else root.replace(path, '') + os.sep
         for filename in files:
-            zip.write(os.path.join(root, filename), relative_root + filename)
-    zip.close()
+            zfile.write(os.path.join(root, filename), relative_root + filename)
+    zfile.close()
+    buffer.seek(0)
+    return buffer
 
 
 if __name__ == '__main__':
@@ -71,6 +82,6 @@ if __name__ == '__main__':
     repo_content = get_repo_content(owner, name)
     data = get_player_update_info(owner, name, repo_content)
     merge_file_data(owner, name, data)
-        # zip_map('saves')
-        # update_file_to_repo(owner, name, 'release.zip')
-
+    with open('test.zip', 'wb') as f:
+        f.write(zip_files_in_buffer('save').getbuffer())
+    update_file_to_repo(owner, name, 'test.zip')
