@@ -76,6 +76,7 @@ def delete_file_from_repo(repo_owner, repo_name, repo, file_name):
 def zip_files_in_buffer(path):
     buffer = io.BytesIO()
     zfile = zipfile.ZipFile(buffer, 'w', zipfile.ZIP_DEFLATED)
+    print(os.walk(path))
     for root, dirs, files in os.walk(path):
         relative_root = '' if root == path else root.replace(path, '') + os.sep
         for filename in files:
@@ -96,6 +97,8 @@ if __name__ == '__main__':
     with open(packing_name, 'wb') as f:
         print(zip_files_in_buffer('save').getbuffer())
         f.write(zip_files_in_buffer('save').getbuffer())
+    print(os.getcwd())
+    print(os.listdir())
     delete_file_from_repo(owner, name, repo_content, packing_name)
     update_file_to_repo(owner, name, packing_name)
 
