@@ -80,6 +80,7 @@ def zip_files_in_buffer(path):
         relative_root = '' if root == path else root.replace(path, '') + os.sep
         for filename in files:
             zfile.write(os.path.join(root, filename), relative_root + filename)
+    print(zfile.filelist)
     zfile.close()
     buffer.seek(0)
     return buffer
@@ -93,6 +94,7 @@ if __name__ == '__main__':
     data = get_player_update_info(owner, name, repo_content)
     merge_file_data(owner, name, data)
     with open(packing_name, 'wb') as f:
+        print(zip_files_in_buffer('save').getbuffer())
         f.write(zip_files_in_buffer('save').getbuffer())
     delete_file_from_repo(owner, name, repo_content, packing_name)
     update_file_to_repo(owner, name, packing_name)
