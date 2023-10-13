@@ -84,5 +84,5 @@ if __name__ == '__main__':
     data = get_player_update_info(owner, name, repo_content)
     merge_file_data(owner, name, data)
     with open('test.zip', 'wb') as f:
-        f.write(zip_files_in_buffer('save').getbuffer())
+        f.write(zip_files_in_buffer('saves').getbuffer())
     update_file_to_repo(owner, name, 'test.zip')
