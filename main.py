@@ -70,7 +70,7 @@ def delete_file_from_repo(repo_owner, repo_name, repo, file_name):
         if i['name'] == packing_name:
             warnings.filterwarnings('ignore')
             data = {"message": "删除旧版本", "sha": i['sha']}
-            requests.delete(url + packing_name, data=json.dumps(data), headers=headers, verify=False)
+            requests.delete(url + file_name, data=json.dumps(data), headers=headers, verify=False)
 
 
 def zip_files_in_buffer(path):
