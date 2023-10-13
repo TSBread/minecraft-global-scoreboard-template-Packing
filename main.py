@@ -65,7 +65,7 @@ def zip_map(path):
 
 
 if __name__ == '__main__':
-    print("test")
+    print(os.listdir('saves'))
     owner = 'TSBread'
     name = 'minecraft-global-scoreboard-template-Packing'
     repo_content = get_repo_content(owner, name)
