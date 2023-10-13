@@ -42,7 +42,7 @@ def open_file(file):
 
 
 def update_file_to_repo(repo_owner, repo_name, file):
-    url = 'https://api.github.com/repos/' + repo_owner + '/' + repo_name + '/content/'
+    url = 'https://api.github.com/repos/' + repo_owner + '/' + repo_name + '/contents/'
     data = {"message": "地图档案打包", "content": base64.b64encode(open_file(file)).decode('utf-8')}
     warnings.filterwarnings('ignore')
     print(data['content'])
