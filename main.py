@@ -15,9 +15,10 @@ print("template by TSBread")
 
 
 def merge_file_data(repo_owner, repo_name, data):
-    path = '/modify.mcfunction'
+    path = 'modify.mcfunction'
     url = 'https://api.github.com/repos/' + repo_owner + '/' + repo_name + '/contents/saves?ref=main'
     for i in json.loads(urlopen(Request(url, headers=headers)).read().decode()):
+        print(i['name'])
         if i['name'] == path:
             url = 'https://api.github.com/repos/' + repo_owner + '/' + repo_name + '/git/blobs/' + i['sha']
             content = json.loads(urlopen(Request(url, headers=headers)).read().decode())
@@ -27,12 +28,11 @@ def merge_file_data(repo_owner, repo_name, data):
             else:
                 get_data.insert(-1, "," + data)
             data = "".join(get_data)
-            Mydata = {"message": "上传玩家提交数据", "sha": i['sha'],
+            mydata = {"message": "上传玩家提交数据", "sha": i['sha'],
                       "content": bytes.decode(base64.b64encode(data.encode('utf-8')))}
             url = 'https://api.github.com/repos/' + repo_owner + '/' + repo_name + '/contents/saves'
             warnings.filterwarnings('ignore')
-            feedback = requests.put(url + path, data=json.dumps(Mydata), headers=headers, verify=False)
-            print(feedback.text)
+            requests.put(url + "/"+path, data=json.dumps(mydata), headers=headers, verify=False)
 
 
 def update_file_to_repo(repo_owner, repo_name, file):
