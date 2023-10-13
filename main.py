@@ -82,9 +82,11 @@ if __name__ == '__main__':
     owner = 'TSBread'
     name = 'minecraft-global-scoreboard-template-Packing'
     repo_content = get_repo_content(owner, name)
-    if check_mgst(repo_content):
-        data = get_player_update_info(owner, name, repo_content)
-        merge_file_data(owner, name, data)
+    data = get_player_update_info(owner, name, repo_content)
+    merge_file_data(owner, name, data)
+    # if check_mgst(repo_content):
+    #     data = get_player_update_info(owner, name, repo_content)
+    #     merge_file_data(owner, name, data)
         # zip_map('saves')
         # update_file_to_repo(owner, name, 'release.zip')
         # delete_player_update_info(owner, name, repo_content)
